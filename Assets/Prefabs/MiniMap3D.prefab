@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.1
+  moveMiniMap: {fileID: 1527749678458362778, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!65 &8353182043390420406
 BoxCollider:
   m_ObjectHideFlags: 0
