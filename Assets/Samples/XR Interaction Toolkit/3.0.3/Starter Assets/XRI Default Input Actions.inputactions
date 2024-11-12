@@ -1248,6 +1248,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SpawnMiniMap",
+                    "type": "Button",
+                    "id": "7504d649-1bd1-4955-8c42-f9a7caaaa7d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1490,6 +1499,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Thumbstick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edfc1bac-642c-4b11-b538-ecbbaa523ff3",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpawnMiniMap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
