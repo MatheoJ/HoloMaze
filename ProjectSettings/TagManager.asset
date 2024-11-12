@@ -9,6 +9,7 @@ TagManager:
   - PickableObject
   - PickableObjectMiniMap
   - MiniMap
+  - MovableInMiniMap
   layers:
   - Default
   - TransparentFX

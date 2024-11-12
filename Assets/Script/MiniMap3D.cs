@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 
 public class MiniMap3D : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private float scale = 0.1f;
+    private float scale = 0.01f;
     
     [SerializeField]
     InputActionReference moveMiniMap;
@@ -41,7 +43,18 @@ public class MiniMap3D : MonoBehaviour
         
         foreach (GameObject child in childrenReproductible)
         {
-            Utils.createDuplicate(child, this.gameObject, scale);
+            GameObject newGameObject = Utils.createDuplicate(child, this.gameObject, scale);
+            
+            //Get tag of the child 
+            if (child.tag == "MovableInMiniMap")
+            {
+                newGameObject.AddComponent<MiniMapMoovableObject>();
+                newGameObject.GetComponent<MiniMapMoovableObject>().linkedObject = child;
+                newGameObject.GetComponent<MiniMapMoovableObject>().scale = 1/scale;
+                newGameObject.GetComponent<XRGrabInteractable>().enabled = true;
+                newGameObject.GetComponent<XRGeneralGrabTransformer>().enabled = true;
+            }
+            
         }
         
         boxCollider = this.gameObject.GetComponent<BoxCollider>();
@@ -58,6 +71,8 @@ public class MiniMap3D : MonoBehaviour
         boxCollider.size = bounds.size;
         boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y + 1.0f, boxCollider.size.z);
         boxCollider.center = bounds.center - this.transform.position;
+        
+        
     }
     
     void Start()
@@ -98,6 +113,7 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;
             
             pickableObject.tag = "PickableObjectMiniMap";
+            Destroy(pickableObject.GetComponent<XRGrabInteractable>());
             Destroy(oldRigidbody);
         }
     }
@@ -108,7 +124,7 @@ public class MiniMap3D : MonoBehaviour
         GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         Vector3 forward = new Vector3(mainCamera.transform.forward.x, 0.0f, mainCamera.transform.forward.z);
         forward.Normalize();
-        forward.y = -0.2f;
+        forward.y = -0.4f;
         this.transform.position = mainCamera.transform.position + forward * 2.0f;
     }
     

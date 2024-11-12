@@ -14,15 +14,17 @@ public static class Utils
         return new Vector3(v.x / scale, v.y / scale, v.z / scale);
     }
     
-    public static GameObject createDuplicate(GameObject orginalObject, GameObject parentOfDuplicate, float scale)
+    public static GameObject createDuplicate(GameObject originalObject, GameObject parentOfDuplicate, float scale)
     {
-        GameObject newChild = GameObject.Instantiate(orginalObject, Vector3.zero, Quaternion.identity);
+        GameObject newChild = GameObject.Instantiate(originalObject, Vector3.zero, Quaternion.identity);
+        
         newChild.transform.parent = parentOfDuplicate.transform;
-        Vector3 childPosition = orginalObject.transform.localPosition;
-        Vector3 childScale = orginalObject.transform.localScale;
+        Vector3 childPosition = originalObject.transform.localPosition;
+        Vector3 childScale = originalObject.transform.localScale;
         newChild.transform.localScale = Utils.scaleVector3(childScale, scale);
         newChild.transform.localPosition = Utils.scaleVector3(childPosition, scale);
-        newChild.transform.localRotation = orginalObject.transform.localRotation;
+        newChild.transform.localRotation = originalObject.transform.localRotation;
+        
         return newChild;
     }
 }
