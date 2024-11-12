@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class MiniMap3D : MonoBehaviour
@@ -10,7 +11,20 @@ public class MiniMap3D : MonoBehaviour
     [SerializeField]
     private float scale = 0.1f;
     
+    [SerializeField]
+    InputActionReference moveMiniMap;
+    
     private BoxCollider boxCollider;
+
+    private void Awake()
+    {
+        moveMiniMap.action.performed += MoveMiniMapinFrontOfPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        moveMiniMap.action.performed -= MoveMiniMapinFrontOfPlayer;
+    }
 
     void InitMiniMap()
     {
@@ -54,6 +68,8 @@ public class MiniMap3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //If the player press the moveMiniMap button, the MiniMap3D will move
+        
         
     }
 
@@ -85,4 +101,15 @@ public class MiniMap3D : MonoBehaviour
             Destroy(oldRigidbody);
         }
     }
+
+    void MoveMiniMapinFrontOfPlayer(InputAction.CallbackContext context)
+    {
+        //Get the main camera and place the MiniMap3D in front of it
+        GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        Vector3 forward = new Vector3(mainCamera.transform.forward.x, 0.0f, mainCamera.transform.forward.z);
+        forward.Normalize();
+        forward.y = -0.2f;
+        this.transform.position = mainCamera.transform.position + forward * 2.0f;
+    }
+    
 }
