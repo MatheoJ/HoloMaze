@@ -15,6 +15,9 @@ public class MiniMap3D : MonoBehaviour
     
     [SerializeField]
     InputActionReference moveMiniMap;
+
+    [SerializeField]
+    private GameObject PlayerPrefab;
     
     private BoxCollider boxCollider;
 
@@ -40,7 +43,6 @@ public class MiniMap3D : MonoBehaviour
         }
         
         //Duplicate all the children of the MiniMapReproductible and put them as children of the MiniMap3D
-        
         foreach (GameObject child in childrenReproductible)
         {
             GameObject newGameObject = Utils.createDuplicate(child, this.gameObject, scale);
@@ -54,45 +56,28 @@ public class MiniMap3D : MonoBehaviour
                 newGameObject.GetComponent<XRGrabInteractable>().enabled = true;
                 newGameObject.GetComponent<XRGeneralGrabTransformer>().enabled = true;
             }
-            
         }
         
-        boxCollider = this.gameObject.GetComponent<BoxCollider>();
-        //Set the box collider of the MiniMap3D to encapsulate all the children
-        Bounds bounds = new Bounds(this.transform.GetChild(0).transform.position, Vector3.zero);
-        foreach (Transform child in this.transform)
-        {
-            Renderer childRenderer = child.GetComponent<Renderer>();
-            if (childRenderer != null)
-            {
-                bounds.Encapsulate(childRenderer.bounds);
-            }
-        }
-        boxCollider.size = bounds.size;
-        boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y + 1.0f, boxCollider.size.z);
-        boxCollider.center = bounds.center - this.transform.position;
+        //Instantiate the player in the MiniMap3D
+        GameObject player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
+        player.transform.parent = this.gameObject.transform;
+        player.transform.localScale = Utils.scaleVector3(player.transform.localScale, scale);
+        player.GetComponent<PlayerOnMiniMap>().scale = scale;
         
-        
+        setColliderSize();
     }
     
     void Start()
     {
        InitMiniMap(); 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //If the player press the moveMiniMap button, the MiniMap3D will move
-        
-        
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PickableObject")
         {
             GameObject pickableObject = other.gameObject;
+            pickableObject.tag = "PickableObjectMiniMap";
             
             pickableObject.transform.parent = this.transform;
             GameObject miniMapReproductible = GameObject.FindGameObjectWithTag("MapReproductible");
@@ -112,7 +97,7 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.GetComponent<MoovableObject>().linkedObject = pickableObject;
             newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;
             
-            pickableObject.tag = "PickableObjectMiniMap";
+            
             Destroy(pickableObject.GetComponent<XRGrabInteractable>());
             Destroy(oldRigidbody);
         }
@@ -126,6 +111,46 @@ public class MiniMap3D : MonoBehaviour
         forward.Normalize();
         forward.y = -0.4f;
         this.transform.position = mainCamera.transform.position + forward * 2.0f;
+    }
+
+    void setColliderSize()
+    {
+        boxCollider = this.gameObject.GetComponent<BoxCollider>();
+
+        // Get all renderers in this GameObject and its children (at any depth)
+        Renderer[] renderers = this.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            // Initialize bounds with the first renderer's bounds
+            Bounds bounds = renderers[0].bounds;
+
+            // Encapsulate bounds of all renderers
+            foreach (Renderer renderer in renderers)
+            {
+                bounds.Encapsulate(renderer.bounds);
+            }
+
+            // Convert bounds center from world space to local space
+            Vector3 localCenter = this.transform.InverseTransformPoint(bounds.center);
+
+            // Set the BoxCollider's center and size
+            boxCollider.center = localCenter;
+            boxCollider.size = bounds.size;
+
+            // Optionally adjust the size (e.g., increase the 'y' size)
+            boxCollider.size = new Vector3(
+                boxCollider.size.x,
+                boxCollider.size.y + 1.0f,
+                boxCollider.size.z
+            );
+        }
+        else
+        {
+            // Handle the case where no renderers are found
+            boxCollider.size = Vector3.zero;
+            boxCollider.center = Vector3.zero;
+        }
     }
     
 }
