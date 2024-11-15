@@ -28,7 +28,7 @@ public class DynamicSkyboxController : MonoBehaviour
     [SerializeField] private Color sunriseLightColor = new Color(255f / 255f, 135f / 255f, 102f / 255f, 1f);
     [SerializeField] private Color dayLightColor = Color.white;
     [SerializeField] private Color sunsetLightColor = new Color(255f / 255f, 128f / 255f, 76f / 255f, 1f);
-    [SerializeField] private float nightLightIntensity = 0.1f;
+                     private float nightLightIntensity = 0f;
     [SerializeField] private float sunriseLightIntensity = 0.6f;
     [SerializeField] private float dayLightIntensity = 1.0f;
     [SerializeField] private float sunsetLightIntensity = 0.4f;
@@ -49,6 +49,13 @@ public class DynamicSkyboxController : MonoBehaviour
     [SerializeField] private float sunsetToNightThresh = 170f;
     [SerializeField] private float blendRange = 15f;
 
+    [Header("Lighting Environment parameters")]
+    [SerializeField] private float dayIntensityMultiplier = 1f;
+    [SerializeField] private float nightIntensityMultiplier = 0.3f;
+
+    [Header("For tests")]
+    [SerializeField] private float sunStartAngle = 90f;
+
     // Skybox and directional light parameters
     private Color skyColor;
     private float exposure;
@@ -62,12 +69,10 @@ public class DynamicSkyboxController : MonoBehaviour
     private float semiBlendRange;
     private float sunAngle;
     private float moonAngle;
+    private float moonYRotation = 0;
+    private float moonZRotation = 0;
     private bool itIsNight;
-
-    [Header("Tests")]
-    [SerializeField] private float moonYRotation = 0;
-    [SerializeField] private float moonZRotation = 0;
-
+    private float ambientLightIntensity;
 
 
 
@@ -84,8 +89,8 @@ public class DynamicSkyboxController : MonoBehaviour
         RenderSettings.skybox = proceduralSkybox;
 
         // Initializing the sunDirectionalLight and the moonDirectionalLight to midday position
-        sunDirectionalLight.transform.rotation = Quaternion.Euler(90, 0, 0);
-        moonDirectionalLight.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        sunDirectionalLight.transform.rotation = Quaternion.Euler(sunStartAngle, 0, 0);
+        moonDirectionalLight.transform.rotation = Quaternion.Euler(-sunStartAngle, 0, 0);
         itIsNight = true;
 
         // Initializing the moon position at -90°
@@ -154,6 +159,8 @@ public class DynamicSkyboxController : MonoBehaviour
             StoreProceduralSettings(nightSkyColor, nightExposure, nightLightColor, nightLightIntensity);
 
             shouldEnableStars = true; // Stars enabled
+
+            ambientLightIntensity = nightIntensityMultiplier; // very weak ambient light for nightTime (Lighting > Environment > IntensityMultiplier)
         }
 
         // Night - SunRise Transition
@@ -165,6 +172,10 @@ public class DynamicSkyboxController : MonoBehaviour
                             nightLightIntensity, sunriseLightIntensity);
 
             shouldEnableStars = true; // Stars enabled     -> as the skybox gradually lightens, the stars seem to progressively disappear
+
+            // Smooth transition from very weak ambient light (nightTime) to normal ambient light (dayTime)
+            ambientLightIntensity = CalculateAmbientLightIntensity(nightToSunriseThresh-semiBlendRange, nightToSunriseThresh+semiBlendRange, 
+                            sunAngle, nightIntensityMultiplier, dayIntensityMultiplier);
         }
 
         // Sunrise
@@ -174,6 +185,8 @@ public class DynamicSkyboxController : MonoBehaviour
             StoreProceduralSettings(sunriseSkyColor, sunriseExposure, sunriseLightColor, sunriseLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
+
+            ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
         }
 
         // Sunrise - Day transition
@@ -186,6 +199,8 @@ public class DynamicSkyboxController : MonoBehaviour
 
             shouldEnableStars = false; // Stars disabled
 
+            ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
+
         }
 
         // Day
@@ -195,6 +210,8 @@ public class DynamicSkyboxController : MonoBehaviour
             StoreProceduralSettings(daySkyColor, dayExposure,dayLightColor, dayLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
+
+            ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
 
         }
 
@@ -207,6 +224,8 @@ public class DynamicSkyboxController : MonoBehaviour
                             dayLightIntensity, sunsetLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
+
+            ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
         }
 
         // Sunset
@@ -216,6 +235,8 @@ public class DynamicSkyboxController : MonoBehaviour
             StoreProceduralSettings(sunsetSkyColor, sunsetExposure, sunsetLightColor, sunsetLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
+
+            ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
         }
 
         // Sunset - Night transition
@@ -228,6 +249,10 @@ public class DynamicSkyboxController : MonoBehaviour
                             sunsetLightIntensity, nightLightIntensity);
             
             shouldEnableStars = true; // Stars enabled     -> as the skybox gradually darkens, the stars seem to progressively appear
+
+            // Smooth transition from normal ambient light (dayTime) to very weak ambient light (nightTime)
+            ambientLightIntensity = CalculateAmbientLightIntensity(sunsetToNightThresh - semiBlendRange, sunsetToNightThresh + semiBlendRange,
+                            sunAngle, dayIntensityMultiplier, nightIntensityMultiplier);
         }
 
 
@@ -238,6 +263,9 @@ public class DynamicSkyboxController : MonoBehaviour
 
         // Update the stars Particle System
         UpdateStarsActivation(shouldEnableStars);
+
+        // Update ambient light intensity
+        RenderSettings.ambientIntensity = ambientLightIntensity; 
     }
 
 
@@ -292,6 +320,7 @@ public class DynamicSkyboxController : MonoBehaviour
                 sunDirectionalLight.enabled = false; // Disabling sun
                 moonDirectionalLight.enabled = true; // Enabling moon
                 skybox.SetFloat("_SunSize", 0); // Hiding the default "moon"
+                RenderSettings.ambientIntensity = nightIntensityMultiplier;
             }
             // Moon settings don't change
             
@@ -304,6 +333,7 @@ public class DynamicSkyboxController : MonoBehaviour
                 sunDirectionalLight.enabled = true; // Enabling sun
                 moonDirectionalLight.enabled = false; // Disabling moon
                 skybox.SetFloat("_SunSize", daySunSize); // Setting the sun size
+                
             }
 
             // Update sun settings
@@ -349,10 +379,13 @@ public class DynamicSkyboxController : MonoBehaviour
         moon.transform.rotation = targetRotation;
         Debug.Log("======================================moon rotations : " + moon.transform.rotation); 
 
+    }
 
 
-
-
+    private float CalculateAmbientLightIntensity(float startThreshold, float endThreshold, float sunAngle, float startIntensity, float endIntensity)
+    {
+        float factor = Mathf.InverseLerp(startThreshold, endThreshold, sunAngle); // Calculate blend factor
+        return Mathf.Lerp(startIntensity, endIntensity, factor); // Interpolation
     }
 }
 
