@@ -78,6 +78,8 @@ public class MiniMap3D : MonoBehaviour
         {
             GameObject pickableObject = other.gameObject;
             pickableObject.tag = "PickableObjectMiniMap";
+            pickableObject.GetComponent<XRGrabInteractable>().enabled = false;
+
             
             pickableObject.transform.parent = this.transform;
             GameObject miniMapReproductible = GameObject.FindGameObjectWithTag("MapReproductible");
@@ -88,6 +90,14 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.transform.localPosition = Utils.scaleInvVector3(pickableObject.transform.localPosition, scale);
             newMovableObjectInMap.transform.localRotation = pickableObject.transform.localRotation;
             
+            Destroyable destroyable = pickableObject.GetComponent<Destroyable>();
+            if (destroyable != null)
+                destroyable.setLinkedObject(newMovableObjectInMap);
+            
+            destroyable = newMovableObjectInMap.GetComponent<Destroyable>();
+            if (destroyable != null)
+                Destroy(destroyable);
+            
             
             Rigidbody oldRigidbody = pickableObject.GetComponent<Rigidbody>();
             
@@ -96,6 +106,7 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.AddComponent<MoovableObject>();
             newMovableObjectInMap.GetComponent<MoovableObject>().linkedObject = pickableObject;
             newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;
+            
             
             
             Destroy(pickableObject.GetComponent<XRGrabInteractable>());

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1677338416535747803}
   - component: {fileID: 5336142659417760282}
   - component: {fileID: 8353182043390420406}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MiniMap3D
-  m_TagString: Untagged
+  m_TagString: MiniMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9ef89f2e92c6b46aa9380c54fd0a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.1
+  scale: 0.03
   moveMiniMap: {fileID: 1527749678458362778, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  PlayerPrefab: {fileID: 9120843364858413078, guid: 0072e299c513b7c4d9a8bf80bad4e0ce, type: 3}
 --- !u!65 &8353182043390420406
 BoxCollider:
   m_ObjectHideFlags: 0

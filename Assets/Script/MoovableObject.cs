@@ -10,6 +10,8 @@ public class MoovableObject : MonoBehaviour
     public GameObject linkedObject;
     public float scale = 0.1f;
     
+    private const float minHeightBeforeDestroy = -50.0f;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,11 @@ public class MoovableObject : MonoBehaviour
     {
         linkedObject.transform.localPosition = Utils.scaleVector3(this.gameObject.transform.localPosition, scale);
         linkedObject.transform.localRotation = this.gameObject.transform.localRotation;
+        
+        if (linkedObject.transform.position.z < minHeightBeforeDestroy)
+        {
+            Destroy(linkedObject);
+            Destroy(this.gameObject);
+        }
     }
 }
