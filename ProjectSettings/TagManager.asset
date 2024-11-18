@@ -10,6 +10,7 @@ TagManager:
   - PickableObjectMiniMap
   - MiniMap
   - MovableInMiniMap
+  - ToLightWhenNight
   layers:
   - Default
   - TransparentFX
