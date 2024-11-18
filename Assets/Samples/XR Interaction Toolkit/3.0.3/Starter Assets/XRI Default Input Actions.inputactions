@@ -1257,6 +1257,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShootLightning",
+                    "type": "Button",
+                    "id": "40c35d56-447d-43a6-ac54-79b90e62bbcf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1510,6 +1519,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SpawnMiniMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3bb8c023-48c0-429f-8487-0587228fa868",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootLightning",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
