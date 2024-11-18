@@ -4,13 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Anchor
-  - MapReproductible
   - PickableObject
-  - PickableObjectMiniMap
   - MiniMap
-  - MovableInMiniMap
-  - ToLightWhenNight
+  - Anchor
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -18,8 +15,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Teleport
-  - RockDetection
+  - Wall
+  - 
   - 
   - 
   - 
