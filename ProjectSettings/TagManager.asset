@@ -10,6 +10,7 @@ TagManager:
   - Anchor
   - MapReproductible
   - Rock
+  - PickableObjectMiniMap
   layers:
   - Default
   - TransparentFX
