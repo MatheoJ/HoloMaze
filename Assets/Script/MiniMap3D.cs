@@ -48,7 +48,7 @@ public class MiniMap3D : MonoBehaviour
         {
             GameObject newGameObject = Utils.createDuplicate(child, this.gameObject, scale);
             
-            //Get tag of the child 
+            //Deal with all the thing that are movable in the minimap
             if (child.tag == "MovableInMiniMap")
             {
                 newGameObject.AddComponent<MiniMapMoovableObject>();
@@ -56,6 +56,11 @@ public class MiniMap3D : MonoBehaviour
                 newGameObject.GetComponent<MiniMapMoovableObject>().scale = 1/scale;
                 newGameObject.GetComponent<XRGrabInteractable>().enabled = true;
                 newGameObject.GetComponent<XRGeneralGrabTransformer>().enabled = true;
+            }
+            else if (child.tag == "Destroyable")
+            {
+                newGameObject.AddComponent<Destroyable>();
+                newGameObject.GetComponent<Destroyable>().setLinkedObject(child);
             }
         }
         
