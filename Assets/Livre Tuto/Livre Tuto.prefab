@@ -1517,7 +1517,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0.5, z: -0.51}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 0.07500048, z: -0.04285705}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -1767,7 +1767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.3999991}
+  m_AnchoredPosition: {x: 0, y: 0.51}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2357226286960966798
