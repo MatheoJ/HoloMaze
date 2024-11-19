@@ -4014,6 +4014,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1428052242146687119, guid: e43850c6391b3cf4cbce040439922ac6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4768102917741279132, guid: e43850c6391b3cf4cbce040439922ac6, type: 3}
       propertyPath: m_Name
       value: SpiderEnemy
@@ -19535,6 +19539,26 @@ PrefabInstance:
     - target: {fileID: 8138367273071517905, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353182043390420406, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
+      propertyPath: m_Size.x
+      value: 2.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353182043390420406, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
+      propertyPath: m_Size.z
+      value: 1.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353182043390420406, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
+      propertyPath: m_Center.x
+      value: -0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353182043390420406, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
+      propertyPath: m_Center.y
+      value: -0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8353182043390420406, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
+      propertyPath: m_Center.z
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 9180677096306181482, guid: 4454105cd791ac54dad3ead13815e5e8, type: 3}
       propertyPath: m_IsActive

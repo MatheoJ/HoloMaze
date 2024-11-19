@@ -64,7 +64,7 @@ public class MiniMap3D : MonoBehaviour
         player.transform.localScale = Utils.scaleVector3(player.transform.localScale, scale);
         player.GetComponent<PlayerOnMiniMap>().scale = scale;
         
-        setColliderSize();
+        //setColliderSize();
     }
     
     void Start()
