@@ -16,4 +16,11 @@ public class SpiderCollider : MonoBehaviour
             transform.position = spawnPoint;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "SpiderEnemy")
+        {
+            transform.position = spawnPoint;
+        }
+    }
 }
