@@ -8,6 +8,9 @@ TagManager:
   - MiniMap
   - Anchor
   - FxTemporaire
+  - MapReproductible
+  - MovableInMiniMap
+  - PickableObjectMiniMap
   layers:
   - Default
   - TransparentFX
