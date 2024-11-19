@@ -81,5 +81,29 @@ public class SimpleNav : MonoBehaviour
         }
         seesPlayer = false;
     }
-    
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Rock"))
+        {
+            transform.localScale = new Vector3(1, 0.1f, 1);
+            this.enabled = false;
+        }
+    }*/
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                // Vérifie si la normale de collision pointe vers le bas (arrivée par le dessus)
+                if (contact.normal.y < -0.5f)
+                {
+                    transform.localScale = new Vector3(1, 0.1f, 1);
+                    this.enabled = false;
+                }
+            }
+        }
+    }
+
 }

@@ -89,6 +89,7 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.transform.localScale = Utils.scaleInvVector3(pickableObject.transform.localScale, scale);
             newMovableObjectInMap.transform.localPosition = Utils.scaleInvVector3(pickableObject.transform.localPosition, scale);
             newMovableObjectInMap.transform.localRotation = pickableObject.transform.localRotation;
+            newMovableObjectInMap.tag = "Rock";
             
             Destroyable destroyable = pickableObject.GetComponent<Destroyable>();
             if (destroyable != null)

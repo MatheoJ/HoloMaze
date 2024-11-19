@@ -9,6 +9,11 @@ TagManager:
   - MapReproductible
   - MovableInMiniMap
   - Anchor
+<<<<<<< Updated upstream
+=======
+  - FxTemporaire
+  - Rock
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
