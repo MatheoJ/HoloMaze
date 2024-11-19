@@ -3,22 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - PickableObject
-  - MiniMap
-  - MapReproductible
-  - MovableInMiniMap
-  - Anchor
-<<<<<<< Updated upstream
-=======
-  - FxTemporaire
-  - Rock
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Teleport
+  - 
   - Water
   - UI
   - 
