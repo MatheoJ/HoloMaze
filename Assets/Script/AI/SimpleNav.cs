@@ -100,6 +100,7 @@ public class SimpleNav : MonoBehaviour
                 if (contact.normal.y < -0.5f)
                 {
                     transform.localScale = new Vector3(1, 0.1f, 1);
+                    GetComponent<CapsuleCollider>().enabled = false;
                     this.enabled = false;
                 }
             }
