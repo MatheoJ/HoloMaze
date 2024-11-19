@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1677338416535747803}
   - component: {fileID: 5336142659417760282}
   - component: {fileID: 8353182043390420406}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: MiniMap3D
   m_TagString: MiniMap
   m_Icon: {fileID: 0}

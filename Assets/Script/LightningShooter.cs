@@ -56,8 +56,8 @@ public class LightningShooter : MonoBehaviour
         
         //Shoot a raycast from the right controller
         RaycastHit hit;
-        //Filter out the RockDetection layer
-        int layerMask = ~(1 << 7);
+        //Filter out the Ignore RayCast layer
+        int layerMask = ~(1 << 2);
         
         if (Physics.Raycast(rightController.position, rightController.forward, out hit,lightningDistance, layerMask))
         {
