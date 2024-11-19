@@ -23,6 +23,7 @@ public class MiniMap3D : MonoBehaviour
 
     private void Awake()
     {
+        InitMiniMap(); 
         moveMiniMap.action.performed += MoveMiniMapinFrontOfPlayer;
     }
 
@@ -61,6 +62,7 @@ public class MiniMap3D : MonoBehaviour
         //Instantiate the player in the MiniMap3D
         GameObject player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
         player.transform.parent = this.gameObject.transform;
+        player.transform.localPosition = Vector3.zero;
         player.transform.localScale = Utils.scaleVector3(player.transform.localScale, scale);
         player.GetComponent<PlayerOnMiniMap>().scale = scale;
         
@@ -69,7 +71,7 @@ public class MiniMap3D : MonoBehaviour
     
     void Start()
     {
-       InitMiniMap(); 
+      
     }
     
     private void OnTriggerEnter(Collider other)
@@ -103,12 +105,9 @@ public class MiniMap3D : MonoBehaviour
             Rigidbody oldRigidbody = pickableObject.GetComponent<Rigidbody>();
             
             newMovableObjectInMap.GetComponent<Rigidbody>().velocity = oldRigidbody.velocity;
-            
             newMovableObjectInMap.AddComponent<MoovableObject>();
             newMovableObjectInMap.GetComponent<MoovableObject>().linkedObject = pickableObject;
-            newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;
-            
-            
+            newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;           
             
             Destroy(pickableObject.GetComponent<XRGrabInteractable>());
             Destroy(oldRigidbody);
@@ -164,5 +163,5 @@ public class MiniMap3D : MonoBehaviour
             boxCollider.center = Vector3.zero;
         }
     }
-    
+
 }
