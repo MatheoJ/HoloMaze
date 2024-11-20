@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public float GetItIsNight()
+    public bool GetItIsNight()
     {
         return itIsNight;
     }
