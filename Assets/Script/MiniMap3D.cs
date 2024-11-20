@@ -23,6 +23,7 @@ public class MiniMap3D : MonoBehaviour
 
     private void Awake()
     {
+        InitMiniMap(); 
         moveMiniMap.action.performed += MoveMiniMapinFrontOfPlayer;
     }
 
@@ -47,7 +48,7 @@ public class MiniMap3D : MonoBehaviour
         {
             GameObject newGameObject = Utils.createDuplicate(child, this.gameObject, scale);
             
-            //Get tag of the child 
+            //Deal with all the thing that are movable in the minimap
             if (child.tag == "MovableInMiniMap")
             {
                 newGameObject.AddComponent<MiniMapMoovableObject>();
@@ -56,20 +57,26 @@ public class MiniMap3D : MonoBehaviour
                 newGameObject.GetComponent<XRGrabInteractable>().enabled = true;
                 newGameObject.GetComponent<XRGeneralGrabTransformer>().enabled = true;
             }
+            else if (child.tag == "Destroyable")
+            {
+                newGameObject.AddComponent<Destroyable>();
+                newGameObject.GetComponent<Destroyable>().setLinkedObject(child);
+            }
         }
         
         //Instantiate the player in the MiniMap3D
         GameObject player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
         player.transform.parent = this.gameObject.transform;
+        player.transform.localPosition = Vector3.zero;
         player.transform.localScale = Utils.scaleVector3(player.transform.localScale, scale);
         player.GetComponent<PlayerOnMiniMap>().scale = scale;
         
-        setColliderSize();
+        //setColliderSize();
     }
     
     void Start()
     {
-       InitMiniMap(); 
+      
     }
     
     private void OnTriggerEnter(Collider other)
@@ -103,12 +110,9 @@ public class MiniMap3D : MonoBehaviour
             Rigidbody oldRigidbody = pickableObject.GetComponent<Rigidbody>();
             
             newMovableObjectInMap.GetComponent<Rigidbody>().velocity = oldRigidbody.velocity;
-            
             newMovableObjectInMap.AddComponent<MoovableObject>();
             newMovableObjectInMap.GetComponent<MoovableObject>().linkedObject = pickableObject;
-            newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;
-            
-            
+            newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;           
             
             Destroy(pickableObject.GetComponent<XRGrabInteractable>());
             Destroy(oldRigidbody);
@@ -164,5 +168,5 @@ public class MiniMap3D : MonoBehaviour
             boxCollider.center = Vector3.zero;
         }
     }
-    
+
 }
