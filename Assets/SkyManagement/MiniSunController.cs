@@ -83,6 +83,10 @@ public class MiniSunController: MonoBehaviour
         limits.max = maxAngle;
         hingeJoint.limits = limits; // Apply the new limits
 
+        // Initialize the hinge angle at 0 --> found by experimenting, /!\ don't change the minimapCenter orientation !
+        hingeJoint.transform.localRotation = Quaternion.identity;
+        Debug.Log("HingeJoint configured with 0° as origin.");
+
 
         // Get or add LineRenderer component
         lineRenderer = GetComponent<LineRenderer>();
@@ -115,12 +119,13 @@ public class MiniSunController: MonoBehaviour
     void Update()
     {
         if (lineRenderer.enabled) DrawEllipseTwo();
+        SendNewSunAngleToGm();
         //if (isgrabbed) SendNewSunAngleToGm(); // A METTRE QD TESTS AVEC CASQUE ==> call the function only when the minisun angle can change
 
 
         //TESTS
-        transform.position = GetMinisunPositionFromAngle(testAngle);
-        gm.ChangeSunAngle(testAngle);
+        //transform.position = GetMinisunPositionFromAngle(testAngle);
+        //gm.ChangeSunAngle(testAngle);
 
         JointLimits limits = hingeJoint.limits; // Retrieve current limits
         limits.min = minAngle;
@@ -232,21 +237,24 @@ public class MiniSunController: MonoBehaviour
         return worldPosition;
     }
 
-    private float GetMinisunAngleFromPosition(Vector3 sunPosition)
+    private float GetMinisunAngleFromPosition()
     {
         // Calculate the miniSun angle (from -180° to 180°)
-        Transform miniMap3D = this.transform.parent;
-        Vector3 localMiniSunPosition = miniMap3D.InverseTransformPoint(transform.position);
-        Vector3 localCenterPosition = miniMap3D.InverseTransformPoint(minimapCenter.position);
 
-        Vector3 miniSunDirection = (localMiniSunPosition - localCenterPosition).normalized; // Direction of the miniSun towards the ellipse's center  (endpoint - startpoint)
+        Vector3 miniSunDirection = (transform.position - minimapCenter.position).normalized; // Direction of the miniSun towards the ellipse's center  (endpoint - startpoint)
+
+        //Transform miniMap3D = this.transform.parent;
+        //Vector3 localMiniSunPosition = miniMap3D.InverseTransformPoint(this.transform.position);
+        //Vector3 localCenterPosition = miniMap3D.InverseTransformPoint(this.minimapCenter.position);
+
+        //Vector3 miniSunDirection = (localMiniSunPosition - localCenterPosition).normalized; // Direction of the miniSun towards the ellipse's center  (endpoint - startpoint)
         Vector3 ZWorldDirection = Vector3.forward; // We can keep the world vectors because the minimap always keeps the same orientation in the world
         Vector3 XWorldDirection = Vector3.right;
 
         Debug.Log("miniSunDirection: " + miniSunDirection);
         Debug.Log("ZWorldDirection: " + ZWorldDirection);
         Debug.Log("XWorldDirection: " + XWorldDirection);
-        float calculatedAngle = Vector3.SignedAngle(XWorldDirection, miniSunDirection, ZWorldDirection);
+        float calculatedAngle = Vector3.SignedAngle(-ZWorldDirection, miniSunDirection, XWorldDirection);
         //float calculatedAngle = Vector3.SignedAngle(-XLocalDirection, miniSunDirection, ZLocalDirection);
         Debug.Log(" ++++++++++++++++  calculated angle  = " + calculatedAngle);
 
@@ -256,7 +264,7 @@ public class MiniSunController: MonoBehaviour
 
     public void SendNewSunAngleToGm()
     {
-        float newMiniSunAngle = GetMinisunAngleFromPosition(transform.position);
+        float newMiniSunAngle = GetMinisunAngleFromPosition();
 
         if (newMiniSunAngle != miniSunAngle) // If the angle has changed, notify the GameManager
         {

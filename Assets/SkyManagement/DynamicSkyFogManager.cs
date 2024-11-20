@@ -52,6 +52,7 @@ public class DynamicSkyFogManager : MonoBehaviour
     [Header("Moon Orbit Settings")]
     [SerializeField] private float moonOrbitVRadius = 400f; // Vertical radius
     [SerializeField] private float moonOrbitHRadius = 600f; // Horizontal radius
+    [SerializeField] private float angleSupplement = 50f; // used to make the moon appear higher in the sky when the sun is not very low
 
 
     [Header("Thresholds")]
@@ -86,6 +87,7 @@ public class DynamicSkyFogManager : MonoBehaviour
     private float ambientLightIntensity;
     private Color fogColor;
     private float fogDensity;
+
 
 
 
@@ -445,10 +447,18 @@ public class DynamicSkyFogManager : MonoBehaviour
     // This function updates the moonDirectional Light orientation and the moon's (gameObject) position/rotation, depending on the sunAngle
     private void UpdateMoon()
     {
-        
+
         // ========== MOON GAME OBJECT =========
-        // Calculate the moon angle based on the sun angle (they are opposites)
-        moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180;
+        // Calculate the moon angle based on the sun angle
+        //moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180; 
+
+        // Angle supplement is here to make the moon visible when the sun is under the horizon but still close to it (= what happens at night in the game)
+        if (-70 < sunAngle && sunAngle < 0) moonAngle = sunAngle + 180 - angleSupplement;
+        else if (-180 < sunAngle && sunAngle < -110 ) moonAngle = sunAngle + 180 + angleSupplement;
+        else
+        {
+            moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180; // Basic behavior (moon and sun opposites)
+        }
 
         // Convert the moonAngle (degrees) in radians
         float theta = moonAngle * Mathf.Deg2Rad;

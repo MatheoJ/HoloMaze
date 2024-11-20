@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
     {
         if (newAngle < -180 || 180 < newAngle) Debug.LogError("The function ChangeSunAngle() only accepts a value between -180 and 180. Here, newAngle = " + newAngle);
         sunAngle = newAngle;
-        Debug.Log("Gamemanager : avant updateskyfog");
         skyFogManager.UpdateSkyFog(sunAngle);
     }
 

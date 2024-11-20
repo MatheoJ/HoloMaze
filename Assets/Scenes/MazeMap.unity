@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18176615, g: 0.21115112, b: 0.22869363, a: 1}
+  m_IndirectSpecularColor: {r: 0.11420718, g: 0.10742057, b: 0.11053998, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2677,15 +2677,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247188587}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 0, z: -0.48}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.30999944, y: 0, z: -0.47999963}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 348940974}
   - {fileID: 1304373573}
   m_Father: {fileID: 153990827}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!54 &247188590
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6979,6 +6979,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.19356564
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].time
+      value: 0.55166143
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.39489174
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].value
+      value: 0.44711685
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: -3.1261141
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: 0.09449363
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].inSlope
+      value: 0.08296776
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].inSlope
+      value: 0.0324229
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[4].inSlope
+      value: 0.0743202
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: -3.1261141
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: 0.09449363
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].outSlope
+      value: 0.08296776
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[3].outSlope
+      value: 0.0324229
+      objectReference: {fileID: 0}
+    - target: {fileID: 8872479684038913196, guid: afebbdabec972d544a6ce59764b01ef1, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[4].outSlope
+      value: 0.0743202
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8254,10 +8310,10 @@ GameObject:
   - component: {fileID: 813170054}
   - component: {fileID: 813170053}
   - component: {fileID: 813170052}
+  - component: {fileID: 813170059}
   - component: {fileID: 813170051}
   - component: {fileID: 813170057}
   - component: {fileID: 813170058}
-  - component: {fileID: 813170059}
   m_Layer: 0
   m_Name: MiniSun
   m_TagString: Untagged
@@ -8520,8 +8576,8 @@ MonoBehaviour:
   lineWidth: 0.02
   startAngle: -100
   endAngle: 100
-  minAngle: -45
-  maxAngle: 45
+  minAngle: -100
+  maxAngle: 100
   testAngle: 73.5
 --- !u!1 &857537327
 GameObject:
@@ -8601,6 +8657,7 @@ MonoBehaviour:
   moonLightIntensity: 0.2
   moonOrbitVRadius: 1200
   moonOrbitHRadius: 2000
+  angleSupplement: 50
   nightToSunriseThresh: 10
   sunriseToDayThresh: 50
   dayToSunsetThresh: 130
