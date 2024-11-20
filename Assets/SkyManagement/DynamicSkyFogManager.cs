@@ -18,21 +18,21 @@ public class DynamicSkyFogManager : MonoBehaviour
     [SerializeField] private Color sunriseSkyColor = new Color(64f / 255f, 135f / 255f, 51f / 255f, 1f);
     [SerializeField] private Color daySkyColor = Color.black;
     [SerializeField] private Color sunsetSkyColor = new Color(74f / 255f, 82f / 255f, 75f / 255f, 1f);
-    [SerializeField] private float nightExposure = 0.4f;
+    [SerializeField] private float nightExposure = 0f;
     [SerializeField] private float sunriseExposure = 0.9f;
     [SerializeField] private float dayExposure = 0.9f;
     [SerializeField] private float sunsetExposure = 0.7f;
 
 
     [Header("Fog Settings")]
-    [SerializeField] private Color nightFogColor = new Color(78f / 255f, 78f / 255f, 112f / 255f, 1f);
+    [SerializeField] private Color nightFogColor = new Color(0f, 0f, 0f, 1f);
     [SerializeField] private Color sunriseFogColor = new Color(255f / 255f, 135f / 255f, 102f / 255f, 1f);
     [SerializeField] private Color dayFogColor = Color.white;
     [SerializeField] private Color sunsetFogColor = new Color(255f / 255f, 128f / 255f, 76f / 255f, 1f);
-    [SerializeField] private float nightFogDensity = 0f;
-    [SerializeField] private float sunriseFogDensity = 0.6f;
-    [SerializeField] private float dayFogDensity = 1.0f;
-    [SerializeField] private float sunsetFogDensity = 0.4f;
+    [SerializeField] private float nightFogDensity = 0.09f;
+    [SerializeField] private float sunriseFogDensity = 0.04f;
+    [SerializeField] private float dayFogDensity = 0.025f;
+    [SerializeField] private float sunsetFogDensity = 0.04f;
 
     [Header("Sun Directional Light Settings")]
     [SerializeField] private Color nightLightColor = new Color(78f / 255f, 78f / 255f, 112f / 255f, 1f);
@@ -50,10 +50,9 @@ public class DynamicSkyFogManager : MonoBehaviour
     [SerializeField] private float moonLightIntensity = 0.8f;
 
     [Header("Moon Orbit Settings")]
-    [SerializeField] private float moonOrbitVRadius = 400f; // Vertical radius
-    [SerializeField] private float moonOrbitHRadius = 600f; // Horizontal radius
-    [SerializeField] private float angleSupplement = 50f; // used to make the moon appear higher in the sky when the sun is not very low
-
+    [SerializeField] private float moonOrbitVRadius = 1200f; // Vertical radius
+    [SerializeField] private float moonOrbitHRadius = 2000f; // Horizontal radius
+    [SerializeField] private float angleMaxSupplement = 65f; // used to make the moon appear higher in the sky when the sun is not very low
 
     [Header("Thresholds")]
     [SerializeField] private float nightToSunriseThresh = 10f;
@@ -344,7 +343,8 @@ public class DynamicSkyFogManager : MonoBehaviour
         // Update Fog
         RenderSettings.fogColor = fogColor;
         RenderSettings.fogDensity = fogDensity;
-
+        //Debug.Log("_________________RenderSettings.fogColor = " + RenderSettings.fogColor);
+        //Debug.Log("_________________RenderSettings.fogDensity = " + RenderSettings.fogDensity);
 
         //============= SEND INFORMATION TO GAME MANAGER =============
         gm.SetItIsNight(itIsNight);
@@ -400,6 +400,9 @@ public class DynamicSkyFogManager : MonoBehaviour
             if (!itIsNight) // If itIsNight variable is still set to false, it has to be updated
             {
                 itIsNight = true;
+                
+                gm.SetItIsNight(itIsNight);// Update the itIsNight Value of the game manager
+
                 sunDirectionalLight.enabled = false; // Disabling sun
                 moonDirectionalLight.enabled = true; // Enabling moon
                 skybox.SetFloat("_SunSize", 0); // Hiding the default "moon"
@@ -413,6 +416,8 @@ public class DynamicSkyFogManager : MonoBehaviour
             if (itIsNight) // If itIsNight variable is still set to true, it has to be updated
             {
                 itIsNight = false;
+                gm.SetItIsNight(itIsNight);// Update the itIsNight Value of the game manager
+
                 sunDirectionalLight.enabled = true; // Enabling sun
                 moonDirectionalLight.enabled = false; // Disabling moon
                 skybox.SetFloat("_SunSize", daySunSize); // Setting the sun size
@@ -423,7 +428,7 @@ public class DynamicSkyFogManager : MonoBehaviour
             sunDirectionalLight.color = lightColor;
             sunDirectionalLight.intensity = lightIntensity;
         }
-
+        Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::ItisNight =" + itIsNight);
 
         //Debug.Log($"Updating Sun Light - Current Angle: {sunAngle}, Light Enabled: {sunDirectionalLight.enabled}");
         //Debug.Log($"Updating Moon Light - Current Angle: {moonAngle}, Light Enabled: {moonDirectionalLight.enabled}");
@@ -452,12 +457,24 @@ public class DynamicSkyFogManager : MonoBehaviour
         // Calculate the moon angle based on the sun angle
         //moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180; 
 
-        // Angle supplement is here to make the moon visible when the sun is under the horizon but still close to it (= what happens at night in the game)
-        if (-70 < sunAngle && sunAngle < 0) moonAngle = sunAngle + 180 - angleSupplement;
-        else if (-180 < sunAngle && sunAngle < -110 ) moonAngle = sunAngle + 180 + angleSupplement;
+        // Gradual Angle supplement is here to make the moon visible when the sun is under the horizon but still close to it (= what happens at night in the game)
+        if (-13 < sunAngle && sunAngle < 0)
+        {
+            float factor = Mathf.InverseLerp(0, -13, sunAngle); // Calculate factor
+            float interpolatedSupplement = Mathf.Lerp(0, angleMaxSupplement, factor); // Interpolation
+            moonAngle = sunAngle + 180 - interpolatedSupplement;
+        }
+
+        else if (-180 < sunAngle && sunAngle < -167)
+        {
+            //moonAngle = sunAngle + 180 + angleMaxSupplement;
+            float factor = Mathf.InverseLerp(-180, -167, sunAngle); // Calculate factor
+            float interpolatedSupplement = Mathf.Lerp(0, angleMaxSupplement, factor); // Interpolation
+            moonAngle = sunAngle + 180 + interpolatedSupplement;
+        }
         else
         {
-            moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180; // Basic behavior (moon and sun opposites)
+            moonAngle = sunAngle < 0 ? 90 : -90; // Basic behavior (moon and sun opposites)
         }
 
         // Convert the moonAngle (degrees) in radians

@@ -118,56 +118,19 @@ public class MiniSunController: MonoBehaviour
 
     void Update()
     {
-        if (lineRenderer.enabled) DrawEllipseTwo();
+        if (lineRenderer.enabled) DrawEllipse();
         SendNewSunAngleToGm();
         //if (isgrabbed) SendNewSunAngleToGm(); // A METTRE QD TESTS AVEC CASQUE ==> call the function only when the minisun angle can change
 
 
-        //TESTS
+        //TESTS - Uncomment only for testing
         //transform.position = GetMinisunPositionFromAngle(testAngle);
         //gm.ChangeSunAngle(testAngle);
 
-        JointLimits limits = hingeJoint.limits; // Retrieve current limits
-        limits.min = minAngle;
-        limits.max = maxAngle;
-        hingeJoint.limits = limits; // Apply the new limits
     }
 
 
-
-
-
-
-
-    //private void DrawEllipse()
-    //{
-    //    lineRenderer.positionCount = segmentsNumber + 1; // +1 to close the loop
-
-    //    Vector3[] ellipsePoints = new Vector3[segmentsNumber + 1]; // Array to hold the points
-
-    //    // Calculate the local axes of the ellipse from the minimapCenter's transform
-    //    Vector3 localY = minimapCenter.up;   // X-axis (right direction)
-    //    Vector3 localX = minimapCenter.right;  // Z-axis (forward direction)
-
-    //    // Generate points for the ellipse
-    //    for (int i = 0; i <= segmentsNumber; i++) // Loop through each segment
-    //    {
-    //        float theta = 2.0f * Mathf.PI * i / segmentsNumber; // Angle for the current point
-
-    //        // Calculate the position in local space
-    //        Vector3 theLocalPosition = localY * (ellipseRadius * Mathf.Cos(theta)) + localX * (ellipseRadius * Mathf.Sin(theta));
-
-    //        // Convert to world space and add to the center position
-    //        ellipsePoints[i] = minimapCenter.position + theLocalPosition;
-    //    }
-
-    //    // Assign the points to the LineRenderer
-    //    lineRenderer.SetPositions(ellipsePoints);
-    //}
-
-
-
-    private void DrawEllipseTwo()
+    private void DrawEllipse()
     {
         // Ensure startAngle and endAngle are within a valid range
         float angleRange = Mathf.Clamp(endAngle - startAngle, 0, 360);
