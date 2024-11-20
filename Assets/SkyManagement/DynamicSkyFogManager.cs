@@ -1,8 +1,9 @@
 using UnityEngine;
+using System;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-[ExecuteAlways] // M : to remove after testing. Allows to test without running
-public class DynamicSkyboxController : MonoBehaviour
+//[ExecuteAlways] // M : to remove after testing. Allows to test without running
+public class DynamicSkyFogManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Material proceduralSkybox;
@@ -11,7 +12,7 @@ public class DynamicSkyboxController : MonoBehaviour
     [SerializeField] private GameObject moon;
     [SerializeField] private Transform moonOrbitCenterPoint;
     [SerializeField] private ParticleSystem starsParticleSystem;
-    
+
     [Header("Skybox Settings")]
     [SerializeField] private Color nightSkyColor = new Color(205f / 255f, 111f / 255f, 0f / 255f, 1f); // Converted to 0-1 range
     [SerializeField] private Color sunriseSkyColor = new Color(64f / 255f, 135f / 255f, 51f / 255f, 1f);
@@ -34,11 +35,11 @@ public class DynamicSkyboxController : MonoBehaviour
     [SerializeField] private float sunsetFogDensity = 0.4f;
 
     [Header("Sun Directional Light Settings")]
-    [SerializeField] private Color nightLightColor = new Color(78f / 255f, 78f / 255f, 112f / 255f, 1f); 
+    [SerializeField] private Color nightLightColor = new Color(78f / 255f, 78f / 255f, 112f / 255f, 1f);
     [SerializeField] private Color sunriseLightColor = new Color(255f / 255f, 135f / 255f, 102f / 255f, 1f);
     [SerializeField] private Color dayLightColor = Color.white;
     [SerializeField] private Color sunsetLightColor = new Color(255f / 255f, 128f / 255f, 76f / 255f, 1f);
-                     private float nightLightIntensity = 0f;
+    private float nightLightIntensity = 0f;
     [SerializeField] private float sunriseLightIntensity = 0.6f;
     [SerializeField] private float dayLightIntensity = 1.0f;
     [SerializeField] private float sunsetLightIntensity = 0.4f;
@@ -64,8 +65,9 @@ public class DynamicSkyboxController : MonoBehaviour
     [SerializeField] private float dayIntensityMultiplier = 1f;
     [SerializeField] private float nightIntensityMultiplier = 0.3f;
 
-    [Header("For tests")]
-    [SerializeField] private float sunStartAngle = 90f;
+
+    // GameManager
+    private GameManager gm;
 
     // Skybox and directional light parameters
     private Color skyColor;
@@ -91,7 +93,11 @@ public class DynamicSkyboxController : MonoBehaviour
 
     private void Start()
     {
-        // Making sure Directional Lights and Skybox are provided
+        // Instantiating the GameManager
+        gm = GameManager.Instance;
+        if (gm == null) new Exception("GameManager not found in the script DynamicSkyFogManager.cs");
+
+        // Making sure the references are provided
         if (proceduralSkybox == null || sunDirectionalLight == null || moonDirectionalLight == null
             || moon == null || moonOrbitCenterPoint == null || starsParticleSystem == null)
             throw new System.Exception("A reference has not been provided to the DynamicSkyboxController script");
@@ -99,21 +105,27 @@ public class DynamicSkyboxController : MonoBehaviour
         // Initializing the skybox
         RenderSettings.skybox = proceduralSkybox;
 
-        // Initializing the sunDirectionalLight and the moonDirectionalLight to midday position
-        sunDirectionalLight.transform.rotation = Quaternion.Euler(sunStartAngle, 0, 0);
-        moonDirectionalLight.transform.rotation = Quaternion.Euler(-sunStartAngle, 0, 0);
-        itIsNight = true;
+        // Initializing the sunDirectionalLight and the moonDirectionalLight rotations
+        // M : not useful anymore
+        //sunStartAngle = gm.GetSunAngle();
+        //sunDirectionalLight.transform.rotation = Quaternion.Euler(sunStartAngle, 0, 0);
+        //moonDirectionalLight.transform.rotation = Quaternion.Euler(-sunStartAngle, 0, 0);
+
+
 
         // Initializing the moon position at -90°
-        float z = moonOrbitHRadius * Mathf.Cos(-Mathf.PI / 2); // Angle in radians
-        float y = moonOrbitVRadius * Mathf.Sin(-Mathf.PI / 2);
-        moon.transform.position = moonOrbitCenterPoint.position + new Vector3(0, y, z);
+        // M : not useful anymore
 
-        // Initializing skybox and sunDirectionallight parameters to DayTime
-        skyColor = daySkyColor;
-        exposure = dayExposure;
-        lightColor = dayLightColor;
-        lightIntensity = dayLightIntensity;
+        //float z = moonOrbitHRadius * Mathf.Cos(-Mathf.PI / 2); // Angle in radians
+        //float y = moonOrbitVRadius * Mathf.Sin(-Mathf.PI / 2);
+        //moon.transform.position = moonOrbitCenterPoint.position + new Vector3(0, y, z);
+
+        //Initializing skybox and sunDirectionallight parameters to DayTime
+        //M : not useful anymore
+       //skyColor = daySkyColor;
+       // exposure = dayExposure;
+       // lightColor = dayLightColor;
+       // lightIntensity = dayLightIntensity;
 
         // Initializing moonDirectionalLight parameters
         moonDirectionalLight.enabled = false;
@@ -122,6 +134,12 @@ public class DynamicSkyboxController : MonoBehaviour
 
         // Initializing other parameters
         semiBlendRange = blendRange / 2;
+        itIsNight = true;
+
+        // Setting the sky & fog
+        float startSunAngle = gm.GetSunAngle();
+        UpdateSkyFog(startSunAngle);
+        UpdateMoon();
     }
 
 
@@ -131,50 +149,60 @@ public class DynamicSkyboxController : MonoBehaviour
 
     private void Update()
     {
-        UpdateSky();
+       
     }
 
 
 
-    // Function making all the updates of the sky (skybox, sunlight; moonlight, moon position) according to the sunDirectionalLight orientation
-    private void UpdateSky()
+
+
+
+
+
+    //============= FUNCTIONS USED FOR THE SKY AND FOG MANAGEMENT =============
+
+
+
+
+    // Function making all the updates of the sky (skybox, sunlight; moonlight, moon position) according to the sunAngle
+    public void UpdateSkyFog(float newSunAngle)
     {
 
-        /////////////// ANGLES' CALCULATIONS ///////////////
+        //============= ANGLES' CALCULATIONS =============
+
+        // NOT USEFUL ANYMORE
         // Calculate the sun angle based on the sunDirectionalLight orientation (from -180° to 180°)
-        Vector3 sunDirection = -sunDirectionalLight.transform.forward;
-        Vector3 worldZ = Vector3.forward;
-        Vector3 worldX = Vector3.right; ;
-        sunAngle = Vector3.SignedAngle(-worldZ, sunDirection, worldX);
-
-        // Calculate the moon angle based on the sun angle (they are opposites)
-        moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180;
-
-        // apply the moonAngle on the moonDirectionalLight
-        moonDirectionalLight.transform.rotation = Quaternion.Euler(moonAngle, 0, 0);
-        Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::sunAngle = " + sunAngle);
-        Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::moonAngle = " + moonAngle);
+        //Vector3 sunDirection = -sunDirectionalLight.transform.forward;
+        //Vector3 worldZ = Vector3.forward;
+        //Vector3 worldX = Vector3.right; ;
+        //sunAngle = Vector3.SignedAngle(-worldZ, sunDirection, worldX); // Rotation around world x axis
 
 
 
-        /////////////// UPDATING THE MOON POSITION ///////////////
-        UpdateMoonPosition();
+        //============= UPDATING THE SUN ANGLE =============
+        sunAngle = newSunAngle; // M : A REMETTRE
+        sunDirectionalLight.transform.rotation = Quaternion.Euler(sunAngle, 0, 0); // Set the new Sun Directional Light angle
 
 
+        //============= UPDATING THE MOON LIGHT, POSITION & ORIENTATION  =============
+        UpdateMoon();
+
+        //Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::sunAngle = " + sunAngle);
+        //Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::moonAngle = " + moonAngle);
 
 
-        /////////////// DAYTIMES' LOGIC ///////////////
+        //============= DAYTIMES' LOGIC =============
         // Night
         if (sunAngle <= nightToSunriseThresh - semiBlendRange || sunsetToNightThresh + semiBlendRange < sunAngle)
         {
-            Debug.Log("=  Night  =");
+            //Debug.Log("=  Night  =");
             StoreProceduralSettings(nightSkyColor, nightExposure, nightLightColor, nightLightIntensity);
 
             shouldEnableStars = true; // Stars enabled
 
             ambientLightIntensity = nightIntensityMultiplier; // very weak ambient light for nightTime (Lighting > Environment > IntensityMultiplier)
 
-            // Fog 
+            // Fog
             fogColor = nightFogColor;
             fogDensity = nightFogDensity;
 
@@ -183,33 +211,33 @@ public class DynamicSkyboxController : MonoBehaviour
         // Night - SunRise Transition
         else if (nightToSunriseThresh - semiBlendRange < sunAngle && sunAngle <= nightToSunriseThresh + semiBlendRange)
         {
-            Debug.Log("== Night to Sunrise ==");
+            //Debug.Log("== Night to Sunrise ==");
             StoreProceduralTransitionSettings(nightToSunriseThresh - semiBlendRange, nightToSunriseThresh + semiBlendRange, sunAngle,
                             nightSkyColor, sunriseSkyColor, nightExposure, sunriseExposure, nightLightColor, sunriseLightColor,
                             nightLightIntensity, sunriseLightIntensity);
 
-            shouldEnableStars = true; // Stars enabled     -> as the skybox gradually lightens, the stars seem to progressively disappear
+            shouldEnableStars = true; // Stars enabled 	-> as the skybox gradually lightens, the stars seem to progressively disappear
 
             // Smooth transition from very weak ambient light (nightTime) to normal ambient light (dayTime)
-            ambientLightIntensity = CalculateFloatInterpolation(nightToSunriseThresh-semiBlendRange, nightToSunriseThresh+semiBlendRange, 
+            ambientLightIntensity = CalculateFloatInterpolation(nightToSunriseThresh - semiBlendRange, nightToSunriseThresh + semiBlendRange,
                             sunAngle, nightIntensityMultiplier, dayIntensityMultiplier);
 
             // Fog smooth transition
-            fogColor = CalculateColorInterpolation(nightToSunriseThresh-semiBlendRange, nightToSunriseThresh+semiBlendRange, sunAngle, nightFogColor, sunriseFogColor);
-            fogDensity = CalculateFloatInterpolation(nightToSunriseThresh-semiBlendRange, nightToSunriseThresh+semiBlendRange, sunAngle, nightFogDensity, sunriseFogDensity);
+            fogColor = CalculateColorInterpolation(nightToSunriseThresh - semiBlendRange, nightToSunriseThresh + semiBlendRange, sunAngle, nightFogColor, sunriseFogColor);
+            fogDensity = CalculateFloatInterpolation(nightToSunriseThresh - semiBlendRange, nightToSunriseThresh + semiBlendRange, sunAngle, nightFogDensity, sunriseFogDensity);
         }
 
         // Sunrise
         else if (nightToSunriseThresh + semiBlendRange < sunAngle && sunAngle <= sunriseToDayThresh - semiBlendRange)
         {
-            Debug.Log("=  Sunrise  =");
+            //Debug.Log("=  Sunrise  =");
             StoreProceduralSettings(sunriseSkyColor, sunriseExposure, sunriseLightColor, sunriseLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
 
             ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
 
-            // Fog 
+            // Fog
             fogColor = sunriseFogColor;
             fogDensity = sunriseFogDensity;
         }
@@ -217,7 +245,7 @@ public class DynamicSkyboxController : MonoBehaviour
         // Sunrise - Day transition
         else if (sunriseToDayThresh - semiBlendRange < sunAngle && sunAngle <= sunriseToDayThresh + semiBlendRange)
         {
-            Debug.Log("== Sunrise to Day ==");
+            //Debug.Log("== Sunrise to Day ==");
             StoreProceduralTransitionSettings(sunriseToDayThresh - semiBlendRange, sunriseToDayThresh + semiBlendRange, sunAngle,
                             sunriseSkyColor, daySkyColor, sunriseExposure, dayExposure, sunriseLightColor, dayLightColor,
                             sunriseLightIntensity, dayLightIntensity);
@@ -234,14 +262,14 @@ public class DynamicSkyboxController : MonoBehaviour
         // Day
         else if (sunriseToDayThresh + semiBlendRange < sunAngle && sunAngle <= dayToSunsetThresh - semiBlendRange)
         {
-            Debug.Log("=  Day  =");
-            StoreProceduralSettings(daySkyColor, dayExposure,dayLightColor, dayLightIntensity);
+            //Debug.Log("=  Day  =");
+            StoreProceduralSettings(daySkyColor, dayExposure, dayLightColor, dayLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
 
             ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
 
-            // Fog 
+            // Fog
             fogColor = dayFogColor;
             fogDensity = dayFogDensity;
 
@@ -250,7 +278,7 @@ public class DynamicSkyboxController : MonoBehaviour
         // Day - Sunset transition
         else if (dayToSunsetThresh - semiBlendRange < sunAngle && sunAngle <= dayToSunsetThresh + semiBlendRange)
         {
-            Debug.Log("== Day to Sunset ==");
+            //Debug.Log("== Day to Sunset ==");
             StoreProceduralTransitionSettings(dayToSunsetThresh - semiBlendRange, dayToSunsetThresh + semiBlendRange, sunAngle,
                             daySkyColor, sunsetSkyColor, dayExposure, sunsetExposure, dayLightColor, sunsetLightColor,
                             dayLightIntensity, sunsetLightIntensity);
@@ -267,14 +295,14 @@ public class DynamicSkyboxController : MonoBehaviour
         // Sunset
         else if (dayToSunsetThresh + semiBlendRange < sunAngle && sunAngle <= sunsetToNightThresh - semiBlendRange)
         {
-            Debug.Log("=  Sunset  =");
+            //Debug.Log("=  Sunset  =");
             StoreProceduralSettings(sunsetSkyColor, sunsetExposure, sunsetLightColor, sunsetLightIntensity);
 
             shouldEnableStars = false; // Stars disabled
 
             ambientLightIntensity = dayIntensityMultiplier; // normal ambient light for dayTime
 
-            // Fog 
+            // Fog
             fogColor = sunsetFogColor;
             fogDensity = sunsetFogDensity;
         }
@@ -282,13 +310,13 @@ public class DynamicSkyboxController : MonoBehaviour
         // Sunset - Night transition
         else if (sunsetToNightThresh - semiBlendRange < sunAngle && sunAngle <= sunsetToNightThresh + semiBlendRange)
         {
-            Debug.Log("== Sunset to Night ==");
+            //Debug.Log("== Sunset to Night ==");
 
             StoreProceduralTransitionSettings(sunsetToNightThresh - semiBlendRange, sunsetToNightThresh + semiBlendRange, sunAngle,
                             sunsetSkyColor, nightSkyColor, sunsetExposure, nightExposure, sunsetLightColor, nightLightColor,
                             sunsetLightIntensity, nightLightIntensity);
-            
-            shouldEnableStars = true; // Stars enabled     -> as the skybox gradually darkens, the stars seem to progressively appear
+
+            shouldEnableStars = true; // Stars enabled 	-> as the skybox gradually darkens, the stars seem to progressively appear
 
             // Smooth transition from normal ambient light (dayTime) to very weak ambient light (nightTime)
             ambientLightIntensity = CalculateFloatInterpolation(sunsetToNightThresh - semiBlendRange, sunsetToNightThresh + semiBlendRange,
@@ -301,7 +329,7 @@ public class DynamicSkyboxController : MonoBehaviour
 
 
 
-        /////////////// SKY'S UPDATES BASED ON THE DAYTIMES' LOGIC ///////////////
+        //============= SKY'S UPDATES BASED ON THE DAYTIMES' LOGIC =============
         // Update the skybox and the directional lights with the stored settings
         UpdateSkyboxAndLights(proceduralSkybox, skyColor, exposure, lightColor, lightIntensity);
 
@@ -309,11 +337,16 @@ public class DynamicSkyboxController : MonoBehaviour
         UpdateStarsActivation(shouldEnableStars);
 
         // Update ambient light intensity
-        RenderSettings.ambientIntensity = ambientLightIntensity; 
+        RenderSettings.ambientIntensity = ambientLightIntensity;
 
         // Update Fog
         RenderSettings.fogColor = fogColor;
         RenderSettings.fogDensity = fogDensity;
+
+
+        //============= SEND INFORMATION TO GAME MANAGER =============
+        gm.SetItIsNight(itIsNight);
+
     }
 
 
@@ -333,8 +366,8 @@ public class DynamicSkyboxController : MonoBehaviour
                                  Color endSkyColor, float startExposure, float endExposure, Color startLightColor,
                                  Color endLightColor, float startLightIntensity, float endLightIntensity)
     {
-        Debug.Log("In ApplyTransition : startThreshold = " + startThreshold + "    endThreshold = " + endThreshold);
-        
+        //Debug.Log("In ApplyTransition : startThreshold = " + startThreshold + "	endThreshold = " + endThreshold);
+
         // Calculate blend factor
         float factor = Mathf.InverseLerp(startThreshold, endThreshold, sunAngle);
 
@@ -344,7 +377,7 @@ public class DynamicSkyboxController : MonoBehaviour
         lightColor = Color.Lerp(startLightColor, endLightColor, factor);
         lightIntensity = Mathf.Lerp(startLightIntensity, endLightIntensity, factor);
 
-        Debug.Log($"Transition factor: {factor}, Sky Color: {skyColor}, Exposure: {exposure}");
+        //Debug.Log($"Transition factor: {factor}, Sky Color: {skyColor}, Exposure: {exposure}");
     }
 
 
@@ -353,7 +386,7 @@ public class DynamicSkyboxController : MonoBehaviour
     private void UpdateSkyboxAndLights(Material skybox, Color skyColor, float exposure, Color lightColor, float lightIntensity)
     {
         ///// Apply settings to skybox material /////
-        skybox.SetColor("_SkyTint", skyColor); 
+        skybox.SetColor("_SkyTint", skyColor);
         skybox.SetFloat("_Exposure", exposure);
 
 
@@ -371,7 +404,7 @@ public class DynamicSkyboxController : MonoBehaviour
                 RenderSettings.ambientIntensity = nightIntensityMultiplier;
             }
             // Moon settings don't change
-            
+
         }
         else if (0 < sunAngle || sunAngle < 180) // Sun under the horizon - moon over the horizon (opposites)
         {
@@ -381,7 +414,7 @@ public class DynamicSkyboxController : MonoBehaviour
                 sunDirectionalLight.enabled = true; // Enabling sun
                 moonDirectionalLight.enabled = false; // Disabling moon
                 skybox.SetFloat("_SunSize", daySunSize); // Setting the sun size
-                
+
             }
 
             // Update sun settings
@@ -390,8 +423,8 @@ public class DynamicSkyboxController : MonoBehaviour
         }
 
 
-        Debug.Log($"Updating Sun Light - Current Angle: {sunAngle}, Light Enabled: {sunDirectionalLight.enabled}");
-        Debug.Log($"Updating Moon Light - Current Angle: {moonAngle}, Light Enabled: {moonDirectionalLight.enabled}");
+        //Debug.Log($"Updating Sun Light - Current Angle: {sunAngle}, Light Enabled: {sunDirectionalLight.enabled}");
+        //Debug.Log($"Updating Moon Light - Current Angle: {moonAngle}, Light Enabled: {moonDirectionalLight.enabled}");
     }
 
 
@@ -408,15 +441,22 @@ public class DynamicSkyboxController : MonoBehaviour
 
 
 
-    private void UpdateMoonPosition()
+
+    // This function updates the moonDirectional Light orientation and the moon's (gameObject) position/rotation, depending on the sunAngle
+    private void UpdateMoon()
     {
-        float theta = moonAngle * Mathf.Deg2Rad; // Convert the moonAngle (degrees) in radians
+        
+        // ========== MOON GAME OBJECT =========
+        // Calculate the moon angle based on the sun angle (they are opposites)
+        moonAngle = sunAngle < 0 ? sunAngle + 180 : sunAngle - 180;
+
+        // Convert the moonAngle (degrees) in radians
+        float theta = moonAngle * Mathf.Deg2Rad;
 
         // Calculate the new position on the ellipse ("-" found by experimenting)
         float z = moonOrbitHRadius * Mathf.Cos(-theta);
         float y = moonOrbitVRadius * Mathf.Sin(-theta);
         moon.transform.position = moonOrbitCenterPoint.position + new Vector3(0, -y, -z);
-
 
 
         // M : PROBLEM : IT FLIPS AT 90° OR IT ROTATES IN THE WRONG DIRECTION
@@ -425,9 +465,17 @@ public class DynamicSkyboxController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(directionToCenter);
         //targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, moonYRotation, targetRotation.eulerAngles.z); // with this no flip but it rotates in the wrong direction before -90° and after 90°
         moon.transform.rotation = targetRotation;
-        Debug.Log("======================================moon rotations : " + moon.transform.rotation); 
+
+
+        // ========== MOON DIRECTIONAL LIGHT ==========
+        // apply the moonAngle on the moonDirectionalLight
+        moonDirectionalLight.transform.rotation = Quaternion.Euler(moonAngle, 0, 0);
 
     }
+
+
+
+
 
 
     private float CalculateFloatInterpolation(float startThreshold, float endThreshold, float sunAngle, float startFloat, float endFloat)
@@ -441,6 +489,6 @@ public class DynamicSkyboxController : MonoBehaviour
         float factor = Mathf.InverseLerp(startThreshold, endThreshold, sunAngle); // Calculate blend factor
         return Color.Lerp(startColor, endColor, factor); // Interpolation
     }
-}
 
+}
 
