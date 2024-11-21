@@ -2640,6 +2640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Key_Rusty
       objectReference: {fileID: 0}
+    - target: {fileID: 322969909244090206, guid: 1a4ce7ed7389af14cbc47a4b3ba8a164, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 322969909244316537, guid: 1a4ce7ed7389af14cbc47a4b3ba8a164, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3119087
@@ -3476,10 +3480,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 936655011711489263, guid: 5e10be2f5a748844dbd0b2b7e6fafd4a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 210053191}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e10be2f5a748844dbd0b2b7e6fafd4a, type: 3}
 --- !u!4 &179965244 stripped
 Transform:
@@ -3690,23 +3691,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4c61b71bce2758d408c78daf658f7123, type: 3}
   m_PrefabInstance: {fileID: 193879217}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &210053187 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 936655011711489263, guid: 5e10be2f5a748844dbd0b2b7e6fafd4a, type: 3}
-  m_PrefabInstance: {fileID: 179965243}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &210053191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210053187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bad5c526d6ce3346b81349e5298993e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &219199322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6886,6 +6870,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 9ec750fc4cf747f4fbc15d8898b84ad7, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 9ec750fc4cf747f4fbc15d8898b84ad7, type: 3}
       propertyPath: m_Name
       value: Flask
@@ -7805,7 +7793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6876824233961894805, guid: 944bff624466e4242a3377fba75ddaf3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6876824233961894805, guid: 944bff624466e4242a3377fba75ddaf3, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9999,6 +9987,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 340c6d588347b594a84f9be864c07952, type: 3}
       propertyPath: m_Name
       value: Bowl_Full
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 340c6d588347b594a84f9be864c07952, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17933,6 +17925,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 7e1b98bbe17b88644aea6625cb61b2c5, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 7e1b98bbe17b88644aea6625cb61b2c5, type: 3}
       propertyPath: m_Name
       value: Potion_Green (1)
@@ -18399,6 +18395,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: c161e5586532ebc4e8de1f9a45c2754e, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c161e5586532ebc4e8de1f9a45c2754e, type: 3}
       propertyPath: m_Name
       value: Beaker_Full_Var2
@@ -20578,6 +20578,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: e873cbc7c65c12b409ffa8b357ef3039, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e873cbc7c65c12b409ffa8b357ef3039, type: 3}
       propertyPath: m_Name
       value: Potion_Blue
@@ -22720,6 +22724,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bottle
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 764ac3d453b8da24d91a0894ffdc6655, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22898,6 +22906,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: c6179e854b44e2541a9956947c806de0, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c6179e854b44e2541a9956947c806de0, type: 3}
       propertyPath: m_Name
       value: Potion_Red
@@ -27363,6 +27375,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 34636936646bab64fb61023e7f3410ba, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 34636936646bab64fb61023e7f3410ba, type: 3}
       propertyPath: m_Name
       value: Skull (1)
@@ -28934,6 +28950,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 07c11632f362e9544a7c89ada554f4f7, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 07c11632f362e9544a7c89ada554f4f7, type: 3}
       propertyPath: m_Name
       value: Scroll_Small
@@ -33513,6 +33533,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 934778927de152a45a53d7f36b9849b0, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 934778927de152a45a53d7f36b9849b0, type: 3}
       propertyPath: m_Name
       value: Beaker_Full_Var1
@@ -33841,6 +33865,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: affe7203ad95ac04884cd98a039abd27, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: affe7203ad95ac04884cd98a039abd27, type: 3}
       propertyPath: m_Name
       value: Beaker_Empty
@@ -35584,6 +35612,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2068275735}
     m_Modifications:
+    - target: {fileID: -6860895033569716450, guid: 72c499c22acd8d242bb45e122ec43fb2, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 72c499c22acd8d242bb45e122ec43fb2, type: 3}
       propertyPath: m_Name
       value: Ivy_Branch
@@ -36590,7 +36622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 5cb6753c16611884384f3beaff2906bd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cb6753c16611884384f3beaff2906bd, type: 3}
       propertyPath: m_LocalPosition.x
