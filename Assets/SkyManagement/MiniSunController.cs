@@ -124,8 +124,8 @@ public class MiniSunController: MonoBehaviour
 
 
         //TESTS - Uncomment only for testing
-        //transform.position = GetMinisunPositionFromAngle(testAngle);
-        //gm.ChangeSunAngle(testAngle);
+        transform.position = GetMinisunPositionFromAngle(testAngle);
+        gm.ChangeSunAngle(testAngle);
 
     }
 
