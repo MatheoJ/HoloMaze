@@ -85,7 +85,7 @@ public class MiniSunController: MonoBehaviour
 
         // Initialize the hinge angle at 0 --> found by experimenting, /!\ don't change the minimapCenter orientation !
         hingeJoint.transform.localRotation = Quaternion.identity;
-        Debug.Log("HingeJoint configured with 0° as origin.");
+        //Debug.Log("HingeJoint configured with 0° as origin.");
 
 
         // Get or add LineRenderer component
@@ -108,7 +108,7 @@ public class MiniSunController: MonoBehaviour
         // Set the miniSun Position on the ellipse, according to the sun Start Angle defined in the GameManager
         float miniSunStartAngle = gm.GetSunAngle();
         transform.position = GetMinisunPositionFromAngle(miniSunStartAngle);
-        Debug.Log(" ///////////////////////////////// miniSunStartAngle = " + miniSunStartAngle);
+        //Debug.Log(" ///////////////////////////////// miniSunStartAngle = " + miniSunStartAngle);
     }
 
 
@@ -120,12 +120,12 @@ public class MiniSunController: MonoBehaviour
     {
         if (lineRenderer.enabled) DrawEllipse();
         SendNewSunAngleToGm();
-        //if (isgrabbed) SendNewSunAngleToGm(); // A METTRE QD TESTS AVEC CASQUE ==> call the function only when the minisun angle can change
+        if (isGrabbed) SendNewSunAngleToGm(); // A METTRE QD TESTS AVEC CASQUE ==> call the function only when the minisun angle can change
 
 
         //TESTS - Uncomment only for testing
-        transform.position = GetMinisunPositionFromAngle(testAngle);
-        gm.ChangeSunAngle(testAngle);
+        //transform.position = GetMinisunPositionFromAngle(testAngle);
+        //gm.ChangeSunAngle(testAngle);
 
     }
 
@@ -214,12 +214,12 @@ public class MiniSunController: MonoBehaviour
         Vector3 ZWorldDirection = Vector3.forward; // We can keep the world vectors because the minimap always keeps the same orientation in the world
         Vector3 XWorldDirection = Vector3.right;
 
-        Debug.Log("miniSunDirection: " + miniSunDirection);
-        Debug.Log("ZWorldDirection: " + ZWorldDirection);
-        Debug.Log("XWorldDirection: " + XWorldDirection);
+        //Debug.Log("miniSunDirection: " + miniSunDirection);
+        //Debug.Log("ZWorldDirection: " + ZWorldDirection);
+        //Debug.Log("XWorldDirection: " + XWorldDirection);
         float calculatedAngle = Vector3.SignedAngle(-ZWorldDirection, miniSunDirection, XWorldDirection);
         //float calculatedAngle = Vector3.SignedAngle(-XLocalDirection, miniSunDirection, ZLocalDirection);
-        Debug.Log(" ++++++++++++++++  calculated angle  = " + calculatedAngle);
+        //Debug.Log(" ++++++++++++++++  calculated angle  = " + calculatedAngle);
 
         return calculatedAngle;
     }
@@ -231,9 +231,9 @@ public class MiniSunController: MonoBehaviour
 
         if (newMiniSunAngle != miniSunAngle) // If the angle has changed, notify the GameManager
         {
-            Debug.Log(" ++++++++++++++++ miniSunAngle has changed ");
-            Debug.Log(" ++++++++++++++++  newMiniSunAngle = " + newMiniSunAngle);
-            Debug.Log(" ++++++++++++++++  miniSunAngle = " + miniSunAngle);
+            //Debug.Log(" ++++++++++++++++ miniSunAngle has changed ");
+            //Debug.Log(" ++++++++++++++++  newMiniSunAngle = " + newMiniSunAngle);
+            //Debug.Log(" ++++++++++++++++  miniSunAngle = " + miniSunAngle);
             miniSunAngle = newMiniSunAngle;
             gm.ChangeSunAngle(miniSunAngle); // MinisunAngle is always between -180 and 180°
         }

@@ -497,7 +497,7 @@ public class SkyFogMusicManager : MonoBehaviour
             sunDirectionalLight.color = lightColor;
             sunDirectionalLight.intensity = lightIntensity;
         }
-        Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::ItisNight =" + itIsNight);
+        //Debug.Log("::::::::::::::::::::::::::::::::::::::::::::::ItisNight =" + itIsNight);
 
         //Debug.Log($"Updating Sun Light - Current Angle: {sunAngle}, Light Enabled: {sunDirectionalLight.enabled}");
         //Debug.Log($"Updating Moon Light - Current Angle: {moonAngle}, Light Enabled: {moonDirectionalLight.enabled}");
