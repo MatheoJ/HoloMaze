@@ -28,7 +28,7 @@ public class PlayerOnMiniMap : MonoBehaviour
 
     void MoveLinkedObject()
     {
-        Vector3 posRelativeToMap = mainCameraTransform.position - mapTransform.position;
+        Vector3 posRelativeToMap = mapTransform.InverseTransformPoint(mainCameraTransform.position);
         this.transform.localPosition = Utils.scaleVector3(posRelativeToMap, scale);
         this.transform.localRotation = this.gameObject.transform.localRotation;
     }

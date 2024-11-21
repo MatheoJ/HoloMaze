@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class MiniMapMoovableObject : MonoBehaviour
@@ -28,8 +29,7 @@ public class MiniMapMoovableObject : MonoBehaviour
 
     void MoveLinkedObject()
     {
-        Vector3 posRelativeToMiniMap = this.gameObject.transform.position - miniMapTransform.position;
+        Vector3 posRelativeToMiniMap = miniMapTransform.InverseTransformPoint(this.gameObject.transform.position);
         linkedObject.transform.localPosition = Utils.scaleVector3(posRelativeToMiniMap, scale);
-        linkedObject.transform.localRotation = this.gameObject.transform.localRotation;
     }
 }
