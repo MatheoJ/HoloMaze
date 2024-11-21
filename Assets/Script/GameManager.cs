@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
 
     // Scripts references
-    private DynamicSkyFogManager skyFogManager;
+    private SkyFogMusicManager skyFogManager;
     private MiniSunController miniSunController;
 
     private float scale = 0.1f; // Scale of the MiniMap  // M : it would be get the scale from the GM in the other scripts (instead of setting it manually)
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Instantiating the scripts' references
-        skyFogManager = FindFirstObjectByType<DynamicSkyFogManager>();
+        skyFogManager = FindFirstObjectByType<SkyFogMusicManager>();
         if (skyFogManager == null) throw new Exception("The script DynamicskyFogManager has not been found.");
 
         miniSunController = FindFirstObjectByType<MiniSunController>();

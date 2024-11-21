@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-9091782433515104756
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 7da909ec483cafd4dbe0bcea6d8eaa70
+  m_EffectName: Attenuation
+  m_MixLevel: f3e1b47bc3e8f6d439496980e0d26245
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-6882040372365769105
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 78dc4df831326e74e82123785ff7b917
+  m_EffectName: Attenuation
+  m_MixLevel: 7ca681e28b145b04b8255980509e635e
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-6717586500605423046
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NightMusic
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: d0d11b6b6d4354c4c97e840f4991e5e5
+  m_Children: []
+  m_Volume: 15a270bc833a4274887daab1cd6ab60d
+  m_Pitch: 30225a58545682d469ba54247bf53e28
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -9091782433515104756}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &-1666990245613538521
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DayMusic
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 043c2fb6186089e4f9cd4ca4a2ae39c9
+  m_Children: []
+  m_Volume: 289b5e8c36289154a87a9a5119381107
+  m_Pitch: 7ed9fb38bd1c6a34d9b31b8fd5f81bd6
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -6882040372365769105}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DayAndNightBackground
+  m_OutputGroup: {fileID: 0}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters:
+  - guid: 289b5e8c36289154a87a9a5119381107
+    name: DayMusicVolume
+  - guid: 15a270bc833a4274887daab1cd6ab60d
+    name: NightMusicVolume
+  m_AudioMixerGroupViews:
+  - guids:
+    - f27b46cf8939eb645a80310f0a7aa744
+    - 043c2fb6186089e4f9cd4ca4a2ae39c9
+    - d0d11b6b6d4354c4c97e840f4991e5e5
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Master
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: f27b46cf8939eb645a80310f0a7aa744
+  m_Children:
+  - {fileID: -1666990245613538521}
+  - {fileID: -6717586500605423046}
+  m_Volume: 096601e588bb1f34f92b46488c2610b9
+  m_Pitch: d673a8d960b23d945a72d310b62fe466
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400004}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: fe64a7b62b03b9f4199625dd965941e0
+  m_EffectName: Attenuation
+  m_MixLevel: 8dc0fe9b72cfc3346943910dcdd5a434
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Snapshot
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 3000a7d6cf9422b4c9eb01ae934f22fd
+  m_FloatValues:
+    096601e588bb1f34f92b46488c2610b9: -1.2736394
+    289b5e8c36289154a87a9a5119381107: -25.086687
+    15a270bc833a4274887daab1cd6ab60d: -5.9609413
+  m_TransitionOverrides: {}
