@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3454277780503944143}
   - component: {fileID: 3454277780502944015}
   - component: {fileID: 3454277780500744128}
-  - component: {fileID: 4258002040865978739}
   - component: {fileID: 3841001873314991030}
   - component: {fileID: 4046397472387783546}
   m_Layer: 0
@@ -109,29 +108,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f57cc7a1624e76443b185852b327936b, type: 3}
---- !u!114 &4258002040865978739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3454277780500744143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: -1
-  m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
-  m_AllowOneHandedScaling: 0
-  m_AllowTwoHandedScaling: 0
-  m_OneHandedScaleSpeed: 0.5
-  m_ThresholdMoveRatioForScale: 0.05
-  m_ClampScaling: 1
-  m_MinimumScaleRatio: 0.25
-  m_MaximumScaleRatio: 2
-  m_ScaleMultiplier: 0.25
 --- !u!54 &3841001873314991030
 Rigidbody:
   m_ObjectHideFlags: 0
