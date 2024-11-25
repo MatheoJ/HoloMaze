@@ -36,7 +36,8 @@ public class SimpleNav : MonoBehaviour
         lookForPlayer();
         if(LKPNotVisited)
         {
-            agent.destination = LKP;
+            if (!NavMesh.SamplePosition(LKP, out NavMeshHit hit2, 0, NavMesh.AllAreas)) { LKPNotVisited = false; }
+            //agent.destination = hit2.position;
             if (Vector3.Distance(transform.position, LKP) <= 1)
             {
                 LKPNotVisited = false;
@@ -71,9 +72,12 @@ public class SimpleNav : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, Vector3.Distance(transform.position, player.position), wallLayer))
                 {
                     seesPlayer = true;
-                    NavMesh.SamplePosition(player.position, out NavMeshHit hit2, 5f, NavMesh.AllAreas);
-                    LKP = hit2.position;
-                    LKPNotVisited = true;
+                    if (NavMesh.SamplePosition(player.position, out NavMeshHit hit2, 5f, NavMesh.AllAreas))
+                    {
+                        LKP = hit2.position;
+                        LKPNotVisited = true;
+                        agent.destination = LKP;
+                    }
                     //Debug.Log("player seen");
                     return;
                 }
@@ -92,6 +96,7 @@ public class SimpleNav : MonoBehaviour
     }*/
     private void OnCollisionEnter(Collision collision)
     {
+        //Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Rock"))
         {
             foreach (ContactPoint contact in collision.contacts)
@@ -101,6 +106,7 @@ public class SimpleNav : MonoBehaviour
                 {
                     transform.localScale = new Vector3(1, 0.1f, 1);
                     GetComponent<CapsuleCollider>().enabled = false;
+                    GetComponent<Animator>().enabled = false;
                     this.enabled = false;
                 }
             }

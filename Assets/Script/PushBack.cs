@@ -25,10 +25,24 @@ public class PushBack : MonoBehaviour
         return combinedNormal;
     }
 
+    private Vector3 spawnPoint;
+    private void Start()
+    {
+        spawnPoint = transform.position;
+    }
+
     private void Update()
     {
         if (_detector.DetectedColliderHits.Count > 0)
         {
+            //_detector.DetectedColliderHits
+            for(int i=0; i< _detector.DetectedColliderHits.Count; i++)
+            {
+                if (_detector.DetectedColliderHits[i].transform.gameObject.name == "SpiderEnemy")
+                {
+                    _characterController.transform.position = spawnPoint;
+                }
+            }
             Vector3 pushBackDirection = CalculatePushBackDirection(_detector.DetectedColliderHits);
 
             // Interpolate the pushback direction for smoothness

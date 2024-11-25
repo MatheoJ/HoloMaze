@@ -7,20 +7,26 @@ public class SpiderCollider : MonoBehaviour
     private Vector3 spawnPoint;
     private void Start()
     {
-        spawnPoint = transform.position;
+        spawnPoint = new Vector3(-16.6100006f, 1.37f, -27.9400005f);// transform.position;
     }
-    /*private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "SpiderEnemy")
+        Debug.Log(other.gameObject.name);
+        if (other.gameObject.name == "SpiderEnemy")
         {
             transform.position = spawnPoint;
         }
-    }*/
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "SpiderEnemy")
+        Debug.Log(collision.gameObject.name);
+        if(collision.gameObject.name == "SpiderEnemy"|| collision.gameObject.tag=="Enemy")
         {
             transform.position = spawnPoint;
         }
+    }
+    public void BackToSpawn()
+    {
+        transform.position = spawnPoint;
     }
 }

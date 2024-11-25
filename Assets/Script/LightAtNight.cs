@@ -61,14 +61,14 @@ public class LightAtNight : MonoBehaviour
             if (haloComponent != null) haloComponent.enabled = true;
             if (vfxObject != null) vfxObject.SetActive(true);
            
-            Debug.Log("ooooooooo light, halo and effect should be on");
+            //Debug.Log("ooooooooo light, halo and effect should be on");
         }
         else // Disable light and VFX
         {
             if (lightComponent != null) lightComponent.enabled = false;
             if (haloComponent != null) haloComponent.enabled = false;
             if (vfxObject != null) vfxObject.SetActive(false);
-            Debug.Log("oooooooo light, halo and effect should be off");
+            //Debug.Log("oooooooo light, halo and effect should be off");
         }
     }
 }
