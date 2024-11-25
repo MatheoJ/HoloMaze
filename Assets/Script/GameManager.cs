@@ -7,11 +7,11 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     [Header("Sky & Weather management")]
-    [SerializeField] private float sunAngle = 90.0f;
+    [SerializeField] private float startSunAngle = 90.0f;
 
 
     // Scripts references
-    private SkyFogMusicManager skyFogManager;
+    private TimeOfTheDayManager skyFogManager;
     private MiniSunController miniSunController;
 
     private float scale = 0.1f; // Scale of the MiniMap  // M : it would be get the scale from the GM in the other scripts (instead of setting it manually)
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Instantiating the scripts' references
-        skyFogManager = FindFirstObjectByType<SkyFogMusicManager>();
+        skyFogManager = FindFirstObjectByType<TimeOfTheDayManager>();
         if (skyFogManager == null) throw new Exception("The script DynamicskyFogManager has not been found.");
 
         miniSunController = FindFirstObjectByType<MiniSunController>();
@@ -88,8 +88,8 @@ public class GameManager : MonoBehaviour
     public void ChangeSunAngle(float newAngle)
     {
         if (newAngle < -180 || 180 < newAngle) Debug.LogError("The function ChangeSunAngle() only accepts a value between -180 and 180. Here, newAngle = " + newAngle);
-        sunAngle = newAngle;
-        skyFogManager.UpdateSkyFog(sunAngle);
+        startSunAngle = newAngle;
+        skyFogManager.UpdateSkyFog(startSunAngle);
     }
 
 
@@ -97,12 +97,12 @@ public class GameManager : MonoBehaviour
     //=============== GETTERS & SETTERS ===============
     public float GetSunAngle()
     {
-        return sunAngle;
+        return startSunAngle;
     }
 
     private void SetSunAngle(float newAngle)
     {
-        sunAngle = newAngle;
+        startSunAngle = newAngle;
     }
 
 

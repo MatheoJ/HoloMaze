@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 //using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 //[ExecuteAlways] // M : to remove after testing. Allows to test without running
-public class SkyFogMusicManager : MonoBehaviour
+public class TimeOfTheDayManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Material proceduralSkybox;
