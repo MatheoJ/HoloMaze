@@ -28,7 +28,7 @@ public class PushBack : MonoBehaviour
     private Vector3 spawnPoint;
     private void Start()
     {
-        spawnPoint = transform.position;
+        spawnPoint = _characterController.transform.position;
     }
 
     private void Update()

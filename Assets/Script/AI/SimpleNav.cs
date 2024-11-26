@@ -38,6 +38,7 @@ public class SimpleNav : MonoBehaviour
         {
             if (!NavMesh.SamplePosition(LKP, out NavMeshHit hit2, 0, NavMesh.AllAreas)) { LKPNotVisited = false; }
             //agent.destination = hit2.position;
+
             if (Vector3.Distance(transform.position, LKP) <= 1)
             {
                 LKPNotVisited = false;
@@ -107,6 +108,8 @@ public class SimpleNav : MonoBehaviour
                     transform.localScale = new Vector3(1, 0.1f, 1);
                     GetComponent<CapsuleCollider>().enabled = false;
                     GetComponent<Animator>().enabled = false;
+                    GetComponent<SpiderSounds>().StopPlaying();
+                    GetComponent<AudioSource>().enabled = false;
                     this.enabled = false;
                 }
             }
