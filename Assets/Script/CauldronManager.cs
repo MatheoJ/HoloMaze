@@ -18,9 +18,15 @@ public class CauldronManager : MonoBehaviour
 
     [Header("Feedback")]
     [SerializeField]
-    private ParticleSystem successEffect; // Optional particle effect when the recipe is complete
+    ParticleSystem successEffect;
     [SerializeField]
-    private AudioSource successSound; // Optional sound effect when the recipe is complete
+    private AudioSource successSound;
+    [SerializeField]
+    private AudioSource dropSound;
+    [SerializeField]
+    private Transform EffectSpawnPoint;
+    [SerializeField]
+    ParticleSystem dropEffect;
 
     private bool isRecipeComplete = false;
 
@@ -35,6 +41,15 @@ public class CauldronManager : MonoBehaviour
             // Add the ingredient to the added list and destroy the object
             addedIngredients.Add(other.gameObject);
             Destroy(other.gameObject);
+
+            if (dropEffect != null) { 
+                ParticleSystem dropEffectInstance = Instantiate(dropEffect, EffectSpawnPoint.position, Quaternion.Euler(-90, 0, 0));
+            }
+                
+            if (dropSound != null)
+            {
+                dropSound.Play();
+            }
 
             // Check if all ingredients are added
             if (!isRecipeComplete && IsRecipeComplete())
@@ -69,7 +84,7 @@ public class CauldronManager : MonoBehaviour
         // Play success effect
         if (successEffect != null)
         {
-            successEffect.Play();
+            ParticleSystem successEffectInstance = Instantiate(successEffect, EffectSpawnPoint.position, Quaternion.identity);
         }
 
         // Play success sound
