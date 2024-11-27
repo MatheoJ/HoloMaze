@@ -21,15 +21,35 @@ public class MiniMap3D : MonoBehaviour
     
     private BoxCollider boxCollider;
 
+    private int MiniMapLayer;
+
     private void Awake()
     {
         InitMiniMap(); 
         moveMiniMap.action.performed += MoveMiniMapinFrontOfPlayer;
+        MiniMapLayer = LayerMask.NameToLayer("MiniMapLayer");
     }
 
     private void OnDestroy()
     {
         moveMiniMap.action.performed -= MoveMiniMapinFrontOfPlayer;
+    }
+    
+    private void GoThroughChildRecursive(GameObject go)
+    {
+        foreach (Transform child in go.transform)
+        {
+            child.gameObject.layer = MiniMapLayer;
+            
+            if(child.gameObject.tag == "CrystalBall")
+            {
+                child.gameObject.GetComponent<XRGrabInteractable>().enabled = false;
+            }
+
+            Transform _HasChildren = child.GetComponentInChildren<Transform>();
+            if (_HasChildren != null)
+                GoThroughChildRecursive(child.gameObject);
+        }
     }
 
     void InitMiniMap()
@@ -71,7 +91,8 @@ public class MiniMap3D : MonoBehaviour
         player.transform.localScale = Utils.scaleVector3(player.transform.localScale, scale);
         player.GetComponent<PlayerOnMiniMap>().scale = scale;
         
-        //setColliderSize();
+        
+        GoThroughChildRecursive(this.gameObject);
     }
     
     void Start()

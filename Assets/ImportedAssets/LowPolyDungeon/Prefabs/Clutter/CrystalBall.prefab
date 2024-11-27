@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4046397472387783546}
   m_Layer: 0
   m_Name: CrystalBall
-  m_TagString: Untagged
+  m_TagString: CrystalBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
