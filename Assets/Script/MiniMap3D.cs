@@ -25,9 +25,9 @@ public class MiniMap3D : MonoBehaviour
 
     private void Awake()
     {
+        MiniMapLayer = LayerMask.NameToLayer("MiniMapLayer");
         InitMiniMap(); 
         moveMiniMap.action.performed += MoveMiniMapinFrontOfPlayer;
-        MiniMapLayer = LayerMask.NameToLayer("MiniMapLayer");
     }
 
     private void OnDestroy()
@@ -40,6 +40,8 @@ public class MiniMap3D : MonoBehaviour
         foreach (Transform child in go.transform)
         {
             child.gameObject.layer = MiniMapLayer;
+            
+            Debug.Log("Child name: " + child.gameObject.name + "layer : " + child.gameObject.layer);
             
             if(child.gameObject.tag == "CrystalBall")
             {
@@ -135,6 +137,7 @@ public class MiniMap3D : MonoBehaviour
             newMovableObjectInMap.GetComponent<MoovableObject>().linkedObject = pickableObject;
             newMovableObjectInMap.GetComponent<MoovableObject>().scale = scale;           
             
+            pickableObject.layer = MiniMapLayer;
             Destroy(pickableObject.GetComponent<XRGrabInteractable>());
             Destroy(oldRigidbody);
         }
