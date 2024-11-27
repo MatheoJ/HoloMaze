@@ -11,11 +11,12 @@ TagManager:
   - MovableInMiniMap
   - Rock
   - PickableObjectMiniMap
+  - Destroyable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Teleport
   - Water
   - UI
   - wallLayer
