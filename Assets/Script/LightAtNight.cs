@@ -13,14 +13,14 @@ public class LightAtNight : MonoBehaviour
     // Other variables
     private Light lightComponent;
     private Behaviour haloComponent;
-    private GameManager gm;
+    private TimeOfDayManager gm;
 
 
     // Start is called before the first frame update
     void Start()
     {
         // Get the Game Manager
-        gm = GameManager.Instance;
+        gm = TimeOfDayManager.Instance;
         if (gm == null) throw new Exception("game manager not found");
 
         // Make sure there is a light component and initialize it

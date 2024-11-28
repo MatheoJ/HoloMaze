@@ -48,7 +48,7 @@ public class MiniSunController: MonoBehaviour
 
     private float miniSunAngle;
 
-    private GameManager gm;
+    private TimeOfDayManager gm;
 
     private HingeJoint hingeJoint;
 
@@ -72,7 +72,7 @@ public class MiniSunController: MonoBehaviour
 
 
         // Get the Game Manager
-        gm = GameManager.Instance;
+        gm = TimeOfDayManager.Instance;
 
         // Initialize HingeJoint
         hingeJoint = minimapCenter.GetComponent<HingeJoint>();

@@ -21456,7 +21456,7 @@ GameObject:
   - component: {fileID: 1156753141}
   - component: {fileID: 1156753140}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: TimeOfDayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
