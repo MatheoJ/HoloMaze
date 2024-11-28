@@ -21456,7 +21456,7 @@ GameObject:
   - component: {fileID: 1156753141}
   - component: {fileID: 1156753140}
   m_Layer: 0
-  m_Name: TimeOfDayManager
+  m_Name: SunManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21471,10 +21471,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1156753139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73131a954414d5a4d955401f84796ed6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f6dc42e0eb6e4f4e8948db3e864b313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSunAngle: 60
+  startSunAngle: 90
 --- !u!4 &1156753141
 Transform:
   m_ObjectHideFlags: 0

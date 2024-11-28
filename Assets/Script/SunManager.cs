@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-public class TimeOfDayManager : MonoBehaviour
+public class SunManager : MonoBehaviour
 {
     [Header("Sky & Weather management")]
     [SerializeField] private float startSunAngle = 90.0f;
@@ -23,16 +23,16 @@ public class TimeOfDayManager : MonoBehaviour
     // =============== MAKING GAMEMANAGER A SINGLETON ===============
     // Making sure there is only one GameManager
 
-    private static TimeOfDayManager _instance; // Stores the reference to the single instance of GameManager
+    private static SunManager _instance; // Stores the reference to the single instance of GameManager
                                           // used for checking if the instance already exists
 
-    public static TimeOfDayManager Instance // Getter : public static property that allows other scripts to access the singleton instance
+    public static SunManager Instance // Getter : public static property that allows other scripts to access the singleton instance
     {                               // encapsulates access to the singleton, making it the only way for external scripts to get the instance
         get
         {
             if (_instance == null)
             {
-                _instance = FindFirstObjectByType<TimeOfDayManager>();
+                _instance = FindFirstObjectByType<SunManager>();
                 if (_instance == null)
                 {
                     Debug.LogError("GameManager not found in the scene");

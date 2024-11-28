@@ -75,7 +75,7 @@ public class TimeOfTheDayManager : MonoBehaviour
     [SerializeField] private float duringNight_nightMusicVolume = 0f;
 
     // GameManager
-    private TimeOfDayManager gm;
+    private SunManager gm;
 
     // Background Musics
     private float dayMusicVolume;
@@ -108,7 +108,7 @@ public class TimeOfTheDayManager : MonoBehaviour
     private void Start()
     {
         // Instantiating the GameManager
-        gm = TimeOfDayManager.Instance;
+        gm = SunManager.Instance;
         if (gm == null) new Exception("GameManager not found in the script DynamicSkyFogManager.cs");
 
         // Making sure the references are provided
